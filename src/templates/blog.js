@@ -37,7 +37,7 @@ const Blog = ({ data, pageContext }) => {
         <article key={post.node.id}>
           <h2>
             <Link
-              to={`/blog/${post.node.uri}`}
+              to={post.node.uri}
               dangerouslySetInnerHTML={{ __html: post.node.title }}
             />
           </h2>

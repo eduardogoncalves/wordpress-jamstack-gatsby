@@ -56,7 +56,7 @@ exports.createPages = async ({ actions, graphql }) => {
 
   posts.forEach(post => {
     actions.createPage({
-      path: `blog/${post.node.uri}`,
+      path: post.node.uri,
       component: require.resolve("./src/templates/post-template.js"),
       context: {
         id: post.node.id,
