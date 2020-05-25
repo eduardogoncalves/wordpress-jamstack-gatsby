@@ -6,12 +6,14 @@
 
 module.exports = {
   /* Your site config here */
-  plugins: [{
-    resolve: 'gatsby-source-graphql',
-    options: {
-      typeName: 'WPGraphQL',
-      fieldName: 'wpgraphql',
-      url: 'https://wordpressjamstack.lwj.dev/graphql',
-    }
-  }],
+  plugins: [
+    {
+      resolve: "gatsby-source-graphql",
+      options: {
+        typeName: "WPGraphQL",
+        fieldName: "wpgraphql",
+        url: "https://noticias.cuiaba.br/graphql",
+      },
+    },
+  ],
 }

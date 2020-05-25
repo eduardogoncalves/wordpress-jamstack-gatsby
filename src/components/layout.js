@@ -10,9 +10,8 @@ const Layout = ({ children }) => {
       wpgraphql {
         generalSettings {
           title
-          url
         }
-        menu(id: "TWVudToy") {
+        menu(id: "bmF2X21lbnU6Mw==") {
           menuItems {
             nodes {
               id
@@ -25,10 +24,10 @@ const Layout = ({ children }) => {
     }
   `)
 
-  const { title, url } = data.wpgraphql.generalSettings
+  const { title } = data.wpgraphql.generalSettings
   const items = data.wpgraphql.menu.menuItems.nodes.map(item => ({
     ...item,
-    url: item.url.replace(url, ""),
+    url: item.url.replace("https://noticias.cuiaba.br/", ""),
   }))
 
   return (
