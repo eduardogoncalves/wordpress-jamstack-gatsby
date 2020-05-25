@@ -8,6 +8,13 @@ export const query = graphql`
       post(id: $id) {
         title
         content
+        date
+        modified
+        categories {
+          nodes {
+            name
+          }
+        }
       }
     }
   }
@@ -15,9 +22,16 @@ export const query = graphql`
 
 const PostTemplate = ({ data }) => {
   const post = data.wpgraphql.post
+
+  console.log(post.categories.nodes)
+
   return (
     <Layout>
       <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
+      {post.date} {post.modified}
+      {post.categories.nodes.map(category => (
+        <span>{category.name}</span>
+      ))}
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
     </Layout>
   )
