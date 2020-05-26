@@ -8,7 +8,7 @@ exports.createPages = async ({ actions, graphql }) => {
             id
           }
         }
-        posts(where: { orderby: { field: DATE, order: DESC } }) {
+        posts(where: { orderby: { field: DATE, order: DESC } }, first: 500) {
           edges {
             cursor
             node {
@@ -17,6 +17,9 @@ exports.createPages = async ({ actions, graphql }) => {
             }
           }
         }
+        readingSettings {
+          postsPerPage
+        }
       }
     }
   `)
@@ -24,7 +27,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const pages = result.data.wpgraphql.pages.nodes
   const posts = result.data.wpgraphql.posts.edges
 
-  const postsPerPage = 4
+  const postsPerPage = result.data.wpgraphql.readingSettings.postsPerPage
   const totalPostPages = Math.ceil(posts.length / postsPerPage)
 
   Array.from({ length: totalPostPages }).forEach((_, i) => {
@@ -44,6 +47,13 @@ exports.createPages = async ({ actions, graphql }) => {
     })
   })
 
+  //TODO: change gatsby-source-graphql to gatsby-source-wordpress-experimental
+
+  /// TODO: load more client side
+  //https://www.wpgraphql.com/2020/03/26/forward-and-backward-pagination-with-wpgraphql/
+  //https://www.gatsbyjs.org/docs/data-fetching/#retrieving-data-with-the-fetch-api
+  //https://github.com/gatsbyjs/gatsby/blob/master/examples/data-fetching/src/pages/index.js#L24
+
   pages.forEach(page => {
     actions.createPage({
       path: page.uri,
@@ -54,6 +64,8 @@ exports.createPages = async ({ actions, graphql }) => {
     })
   })
 
+  //TODO: Gatsby Incremental Builds to build only new posts
+  //https://www.netlify.com/blog/2020/04/23/enable-gatsby-incremental-builds-on-netlify/
   posts.forEach(post => {
     actions.createPage({
       path: post.node.uri,
