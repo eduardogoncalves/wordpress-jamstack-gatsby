@@ -12,6 +12,7 @@ export const query = graphql`
         modified
         categories {
           nodes {
+            id
             name
           }
         }
@@ -30,7 +31,7 @@ const PostTemplate = ({ data }) => {
       <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
       {post.date} {post.modified}
       {post.categories.nodes.map(category => (
-        <span>{category.name}</span>
+        <span key={category.id}>{category.name}</span>
       ))}
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
     </Layout>
