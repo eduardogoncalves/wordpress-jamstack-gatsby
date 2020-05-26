@@ -24,7 +24,7 @@ exports.createPages = async ({ actions, graphql }) => {
   const pages = result.data.wpgraphql.pages.nodes
   const posts = result.data.wpgraphql.posts.edges
 
-  const postsPerPage = 1
+  const postsPerPage = 4
   const totalPostPages = Math.ceil(posts.length / postsPerPage)
 
   Array.from({ length: totalPostPages }).forEach((_, i) => {
@@ -32,7 +32,7 @@ exports.createPages = async ({ actions, graphql }) => {
       path: i === 0 ? `/blog` : `/blog/${i + 1}`,
       component: require.resolve("./src/templates/blog.js"),
       context: {
-        after: i === 0 ? null : posts[i - 1].cursor,
+        after: i === 0 ? null : posts[i * postsPerPage - 1].cursor,
         first: postsPerPage,
         hasPreviousPage: i - 1 >= 0,
         previousPageLink: i === 1 ? `/blog` : `/blog/${i}`,
